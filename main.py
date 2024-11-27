@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QTextEdit
 
 
 class MainWindow(QWidget):
@@ -12,6 +12,13 @@ class MainWindow(QWidget):
         self.setMinimumSize(600, 500)
 
         self.main_layout = QHBoxLayout()  # Главный layout (в нём распологаются все элементы)
+
+        # Создание и заполнение левой колонки
+        self.col_left = QVBoxLayout()
+        self.text_note = QTextEdit()
+        self.col_left.addWidget(self.text_note)
+
+        self.col_right = QVBoxLayout()  # Создание правой колонки
 
 
 if __name__ == '__main__':
