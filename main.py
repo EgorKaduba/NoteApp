@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QTextEdit, QLabel, QListWidget, QPushButton
+from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QTextEdit, QLabel, QListWidget, \
+    QPushButton, QLineEdit
 
 
 class MainWindow(QWidget):
@@ -33,6 +34,20 @@ class MainWindow(QWidget):
         self.layout2.addWidget(self.btn_create_note)
         self.btn_delete_note = QPushButton('Удалить заметку')
         self.layout2.addWidget(self.btn_delete_note)
+
+        # Блок для работы с тегами + кнопка сохранения заметки
+        self.layout3 = QVBoxLayout()
+
+        self.btn_save_note = QPushButton('Сохранить заметку')
+
+        self.layout3.addWidget(self.btn_save_note)
+        self.tags_label = QLabel('Список тегов:')
+        self.layout3.addWidget(self.tags_label)
+        self.lst_tags = QListWidget()
+        self.layout3.addWidget(self.lst_tags)
+        self.edit_tag = QLineEdit()
+        self.edit_tag.setPlaceholderText('Введите тег...')
+        self.layout3.addWidget(self.edit_tag)
 
 
 if __name__ == '__main__':
