@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QTextEdit
+from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QTextEdit, QLabel, QListWidget
 
 
 class MainWindow(QWidget):
@@ -19,6 +19,13 @@ class MainWindow(QWidget):
         self.col_left.addWidget(self.text_note)
 
         self.col_right = QVBoxLayout()  # Создание правой колонки
+
+        # Создание блока со списком заметок
+        self.layout1 = QVBoxLayout()
+        self.lst_notes_label = QLabel('Список заметок:')
+        self.layout1.addWidget(self.lst_notes_label)
+        self.lst_notes = QListWidget()
+        self.layout1.addWidget(self.lst_notes)
 
 
 if __name__ == '__main__':
