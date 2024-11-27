@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QTextEdit, QLabel, QListWidget
+from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QTextEdit, QLabel, QListWidget, QPushButton
 
 
 class MainWindow(QWidget):
@@ -26,6 +26,13 @@ class MainWindow(QWidget):
         self.layout1.addWidget(self.lst_notes_label)
         self.lst_notes = QListWidget()
         self.layout1.addWidget(self.lst_notes)
+
+        # Блок для создания и удаления заметок (кнопки)
+        self.layout2 = QHBoxLayout()
+        self.btn_create_note = QPushButton('Создать заметку')
+        self.layout2.addWidget(self.btn_create_note)
+        self.btn_delete_note = QPushButton('Удалить заметку')
+        self.layout2.addWidget(self.btn_delete_note)
 
 
 if __name__ == '__main__':
