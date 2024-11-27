@@ -1,4 +1,5 @@
 import sys
+
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QTextEdit, QLabel, QListWidget, \
     QPushButton, QLineEdit
@@ -62,6 +63,18 @@ class MainWindow(QWidget):
         self.layout5 = QHBoxLayout()
         self.btn_search_by_tag = QPushButton('Искать заметки по тегу')
         self.layout5.addWidget(self.btn_search_by_tag)
+
+        # Добавление layout-ов на экран
+        self.col_right.addLayout(self.layout1)
+        self.col_right.addLayout(self.layout2)
+        self.col_right.addLayout(self.layout3)
+        self.col_right.addLayout(self.layout4)
+        self.col_right.addLayout(self.layout5)
+        self.col_right.setSpacing(16)
+
+        self.main_layout.addLayout(self.col_left)
+        self.main_layout.addLayout(self.col_right)
+        self.setLayout(self.main_layout)
 
 
 if __name__ == '__main__':
