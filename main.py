@@ -35,19 +35,33 @@ class MainWindow(QWidget):
         self.btn_delete_note = QPushButton('Удалить заметку')
         self.layout2.addWidget(self.btn_delete_note)
 
-        # Блок для работы с тегами + кнопка сохранения заметки
+        # Блоки для работы с тегами + кнопка сохранения заметки
         self.layout3 = QVBoxLayout()
 
         self.btn_save_note = QPushButton('Сохранить заметку')
-
         self.layout3.addWidget(self.btn_save_note)
+
         self.tags_label = QLabel('Список тегов:')
         self.layout3.addWidget(self.tags_label)
+
         self.lst_tags = QListWidget()
         self.layout3.addWidget(self.lst_tags)
+
         self.edit_tag = QLineEdit()
         self.edit_tag.setPlaceholderText('Введите тег...')
         self.layout3.addWidget(self.edit_tag)
+
+        self.layout4 = QHBoxLayout()
+
+        self.btn_add_tag = QPushButton('Добавить к заметке')
+        self.layout4.addWidget(self.btn_add_tag)
+
+        self.btn_delete_tag = QPushButton('Открепить от заметки')
+        self.layout4.addWidget(self.btn_delete_tag)
+
+        self.layout5 = QHBoxLayout()
+        self.btn_search_by_tag = QPushButton('Искать заметки по тегу')
+        self.layout5.addWidget(self.btn_search_by_tag)
 
 
 if __name__ == '__main__':
