@@ -130,6 +130,26 @@ class MainWindow(QWidget):
         except FileNotFoundError:
             self.data = {}
 
+        # Привязка элементов к данным, кнопок к функциям
+        self.lst_notes.addItems(self.data.keys())
+        self.lst_notes.itemClicked.connect(self.show_note)
+        self.btn_create_note.clicked.connect(self.create_note)
+        self.btn_save_note.clicked.connect(self.save_note)
+        self.btn_delete_note.clicked.connect(self.delete_note)
+        self.btn_add_tag.clicked.connect(self.add_tag)
+        self.btn_delete_tag.clicked.connect(self.delete_tag)
+        self.btn_search_by_tag.clicked.connect(self.find_by_tag)
+
+    # Вывод заметки
+    def show_note(self):
+        note_name = self.lst_notes.currentItem().text()
+        n_text = self.data[note_name]["text"]
+        n_tags = self.data[note_name]["tags"]
+
+        self.text_note.setText(n_text)
+        self.lst_tags.clear()
+        self.lst_tags.addItems(n_tags)
+
     # создание заметки
     def create_note(self):
         note_name, result = QInputDialog.getText(window, "Добавить заметку", "Название заметки:")
