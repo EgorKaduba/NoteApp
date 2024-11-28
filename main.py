@@ -3,7 +3,7 @@ import json
 
 from PyQt5.QtGui import QIcon, QFont, QFontDatabase
 from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QTextEdit, QLabel, QListWidget, \
-    QPushButton, QLineEdit, QInputDialog
+    QPushButton, QLineEdit, QInputDialog, QMessageBox
 
 
 class MainWindow(QWidget):
@@ -163,6 +163,51 @@ class MainWindow(QWidget):
 
             self.lst_tags.clear()
             self.text_note.clear()
+
+    # Добавление тега к заметке
+    def add_tag(self):
+        tag_name, result = QInputDialog.getText(window, "Добавить тег к заметке", "Название тега:")
+        if self.lst_notes.currentItem() and result and len(tag_name) > 0:
+            note_name = self.lst_notes.currentItem().text()
+            self.data[note_name]['tags'].append(tag_name)
+            self.lst_tags.addItem(tag_name)
+            self.save_all()
+
+    # Удаление тега
+    def delete_tag(self):
+        if self.lst_notes.currentItem() and self.lst_tags.currentItem():
+            note_name = self.lst_notes.currentItem().text()
+            tag_name = self.lst_tags.currentItem().text()
+            self.data[note_name]['tags'].remove(tag_name)
+
+            cur_row = self.lst_tags.currentRow()
+            self.lst_tags.takeItem(cur_row)
+            self.save_all()
+
+    # поиск заметки по тегу
+    def find_by_tag(self):
+        if self.btn_search_by_tag.text() != 'Сбросить результаты поиска':
+            if len(self.edit_tag.text()) > 0:
+                text_to_find = self.edit_tag.text()
+                result = {}
+                for key, value in self.data.items():
+                    if text_to_find in value['tags']:
+                        result[key] = value
+
+                self.lst_notes.clear()
+                self.lst_tags.clear()
+                self.text_note.clear()
+                self.lst_notes.addItems(result.keys())
+
+                self.btn_search_by_tag.setText('Сбросить результаты поиска')
+            else:
+                QMessageBox.warning(window, 'Предупреждение', 'Вы не ввели тег для поиска')
+        else:
+            self.lst_notes.clear()
+            self.lst_tags.clear()
+            self.text_note.clear()
+            self.lst_notes.addItems(self.data.keys())
+            self.btn_search_by_tag.setText('Искать заметки по тегу')
 
 
 if __name__ == '__main__':
