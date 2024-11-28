@@ -14,7 +14,7 @@ class MainWindow(QWidget):
         self.setWindowIcon(QIcon('icon.ico'))
         self.setMinimumSize(600, 500)
         self.setStyleSheet("background-color: rgb(43, 41, 40);")
-        font_id = QFontDatabase.addApplicationFont(fr'font.ttf')
+        font_id = QFontDatabase.addApplicationFont('font.ttf')
 
         self.all_btn = list()
 
