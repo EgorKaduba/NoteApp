@@ -152,13 +152,21 @@ class MainWindow(QWidget):
 
     # создание заметки
     def create_note(self):
-        note_name, result = QInputDialog.getText(window, "Добавить заметку", "Название заметки:")
-        if result and not note_name in self.data.keys() and note_name != '':
-            self.data[note_name] = {
-                "text": "",
-                "tags": []
-            }
-            self.lst_notes.addItem(note_name)
+        input_dialog = QInputDialog(None)
+        input_dialog.setInputMode(QInputDialog.TextInput)
+        input_dialog.setWindowTitle("Добавить заметку")
+        input_dialog.setLabelText("Название заметки:")
+        input_dialog.setFont(self.font)
+        input_dialog.setStyleSheet("background-color: rgb(224, 218, 215);")
+        result = input_dialog.exec_()
+        if result:
+            note_name = input_dialog.textValue()
+            if not (note_name in self.data.keys()) and note_name != '':
+                self.data[note_name] = {
+                    "text": "",
+                    "tags": []
+                }
+                self.lst_notes.addItem(note_name)
 
     # сохраняет все заметки в json-файл
     def save_all(self):
@@ -183,15 +191,24 @@ class MainWindow(QWidget):
 
             self.lst_tags.clear()
             self.text_note.clear()
+            self.save_all()
 
     # Добавление тега к заметке
     def add_tag(self):
-        tag_name, result = QInputDialog.getText(window, "Добавить тег к заметке", "Название тега:")
-        if self.lst_notes.currentItem() and result and len(tag_name) > 0:
-            note_name = self.lst_notes.currentItem().text()
-            self.data[note_name]['tags'].append(tag_name)
-            self.lst_tags.addItem(tag_name)
-            self.save_all()
+        input_dialog = QInputDialog(None)
+        input_dialog.setInputMode(QInputDialog.TextInput)
+        input_dialog.setWindowTitle("Добавить тег к заметке")
+        input_dialog.setLabelText("Название тега:")
+        input_dialog.setFont(self.font)
+        input_dialog.setStyleSheet("background-color: rgb(224, 218, 215);")
+        result = input_dialog.exec_()
+        if result:
+            tag_name = input_dialog.textValue()
+            if self.lst_notes.currentItem() and result and len(tag_name) > 0:
+                note_name = self.lst_notes.currentItem().text()
+                self.data[note_name]['tags'].append(tag_name)
+                self.lst_tags.addItem(tag_name)
+                self.save_all()
 
     # Удаление тега
     def delete_tag(self):
@@ -221,7 +238,7 @@ class MainWindow(QWidget):
 
                 self.btn_search_by_tag.setText('Сбросить результаты поиска')
             else:
-                QMessageBox.warning(window, 'Предупреждение', 'Вы не ввели тег для поиска')
+                QMessageBox.warning(self, 'Предупреждение', 'Вы не ввели тег для поиска')
         else:
             self.lst_notes.clear()
             self.lst_tags.clear()
