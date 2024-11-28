@@ -1,4 +1,5 @@
 import sys
+import json
 
 from PyQt5.QtGui import QIcon, QFont, QFontDatabase
 from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QTextEdit, QLabel, QListWidget, \
@@ -121,6 +122,13 @@ class MainWindow(QWidget):
         self.main_layout.addLayout(self.col_left)
         self.main_layout.addLayout(self.col_right)
         self.setLayout(self.main_layout)
+
+        # Загрузка данных из json-файла
+        try:
+            with open('notes.json', 'r', encoding='utf-8') as file:
+                self.data = json.load(file)
+        except FileNotFoundError:
+            self.data = {}
 
 
 if __name__ == '__main__':
