@@ -3,7 +3,7 @@ import json
 
 from PyQt5.QtGui import QIcon, QFont, QFontDatabase
 from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QTextEdit, QLabel, QListWidget, \
-    QPushButton, QLineEdit
+    QPushButton, QLineEdit, QInputDialog
 
 
 class MainWindow(QWidget):
@@ -129,6 +129,40 @@ class MainWindow(QWidget):
                 self.data = json.load(file)
         except FileNotFoundError:
             self.data = {}
+
+    # создание заметки
+    def create_note(self):
+        note_name, result = QInputDialog.getText(window, "Добавить заметку", "Название заметки:")
+        if result and not note_name in self.data.keys() and note_name != '':
+            self.data[note_name] = {
+                "text": "",
+                "tags": []
+            }
+            self.lst_notes.addItem(note_name)
+
+    # сохраняет все заметки в json-файл
+    def save_all(self):
+        with open('notes.json', 'w', encoding='utf-8') as file:
+            json.dump(self.data, file, indent=4, ensure_ascii=False)
+
+    # сохраняет выбранную заметку
+    def save_note(self):
+        if self.lst_notes.currentItem():
+            note_name = self.lst_notes.currentItem().text()
+            self.data[note_name]['text'] = self.text_note.toPlainText()
+            self.save_all()
+
+    # удаление выбранной заметки
+    def delete_note(self):
+        if self.lst_notes.currentItem():
+            note_name = self.lst_notes.currentItem().text()
+            del self.data[note_name]
+
+            cur_row = self.lst_notes.currentRow()
+            self.lst_notes.takeItem(cur_row)
+
+            self.lst_tags.clear()
+            self.text_note.clear()
 
 
 if __name__ == '__main__':
